@@ -1,3 +1,3 @@
 # fgit nodejs版
 
-本工具由厉害制作，加速链接由[fastgit](https://hub.fastgit.org)提供。
+<img src="https://avatars2.githubusercontent.com/u/62810231?s=200&v=4">

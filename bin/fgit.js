@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#! /usr/bin/node
 
 var git = require("./../lib/git")
 var exec = require('child_process').exec;

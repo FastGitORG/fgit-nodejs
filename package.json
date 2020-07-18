@@ -1,10 +1,9 @@
 {
   "name": "fgit-cli",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "main": "./lib/main.js",
   "bin": {
-    "fgit": "bin/fgit.js",
-    "fgitraw": "bin/fgitraw.js"
+    "fgit": "bin/fgit.js"
   },
   "description": "加速github仓库克隆的速度",
   "directories": {

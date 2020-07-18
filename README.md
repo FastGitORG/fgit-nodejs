@@ -9,6 +9,8 @@
 
 ## 如何使用？
 
-`fgit` 来查看说
+`fgit` 来查看说明
+
 `fgit r` 加速raw下载速度
+
 `fgit d` 加速github仓库版本源码下载速度

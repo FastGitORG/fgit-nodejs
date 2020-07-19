@@ -1,6 +1,6 @@
 {
   "name": "fgit-cli",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "main": "./lib/main.js",
   "bin": {
     "fgit": "bin/fgit.js"
@@ -28,5 +28,7 @@
     "type": "git",
     "url": "git+https://github.com/fastgitorg/fgit-nodejs.git"
   },
-  "homepage": "https://github.com/fastgitorg/fgit-nodejs#readme"
+  "homepage": "https://github.com/fastgitorg/fgit-nodejs#readme",
+  "dependencies": {},
+  "devDependencies": {}
 }

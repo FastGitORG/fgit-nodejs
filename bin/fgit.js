@@ -7,26 +7,43 @@ var git = require("./../lib/git"),
 		dl = require("./../lib/dl"),
 		fs = require("fs"),
 		ping = require("./../lib/ping"),
-		cloneRe = new RegExp("https?://github\\.com|hub\\.fastgit\\.org/.*/.*|git@github\\.com:.*/.*|git://github\\.com|hub\\.fastgit\\.org/.*/.*", "i"),
-		continueRe = new RegExp("[http[s]?|git]://[]","i")
+		cloneRe = new RegExp("^(https?|git)://(github\\.com|hub\\.fastgit\\.org)/.*/.*", "i"),
+		huan = new RegExp(":github.com/", "i"),
+		githttp = new RegExp("^(https?|git)://.*\..*", "i")
 
 function clone () {
-		argv[2] == "clone" && cloneRe.test(argv[3])?/git@github.com/i.test(argv[3])?
+		var k = "";
+		for (i = 2;i<argv.length;i++){
+				if (githttp.test(argv[i])) {
+						var j = i;
+						continue;
+				}
+				k +=  " " + argv[i] ;
+		}
+		if (!k) k = "";
+		argv[2] == "clone"?/git@github.com/i.test(argv[j])?
 				(
-						console.log("开始下载..."),
-						exec("git clone " + argv[3], function (err, stdout, srderr) {
+						console.log("开始下载..."), 
+						k.replace("clone", ""), 
+						exec("git clone " + argv[j] + k, function (err, stdout, srderr) {
 				if (err) return console.log("出错啦！\n\n" + srderr)
-				console.log("克隆完成\n由于一系列原因，我们无法为您提供github ssh 克隆加速:(");
+				console.log("\n克隆完成\n由于一系列原因，我们无法为您提供github ssh 克隆加速:(\n");
 		})):
 				(console.log("开始下载..."), 
-				exec("git clone " + argv[3].replace("github.com", "hub.fastgit.org"), function (err, stdout, srderr) {
+				exec("git clone " + argv[j].replace(huan, "://hub.fastgit.org/") + k.replace("clone", ""), function (err, stdout, srderr) {
 										if (err) {
 												return console.log("\n出错了请重试\n\n" + srderr + "\n");
 										}
-										console.log("\n看来加速还是不错滴2333\n");
+										cloneRe.test(argv[j])?console.log("\n看来加速还是不错滴2333\n"):console.log("\n下载完毕\n")
 				}
 								)
-				):console.log("\n第三个参数有问题哦\n");
+				):(
+						k.replace("clone", ""), 
+						exec("git clone " + argv[j] + k, function (err, stdout, srderr) {
+						console.log(srderr);
+				}), 
+						console.log("开始下载")
+				)
 }
 
 if (!argv[2]) {

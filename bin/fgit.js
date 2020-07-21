@@ -47,11 +47,11 @@ function clone () {
 }
 
 if (!argv[2]) {
-		console.log("\n欢迎使用fgit。\n" +
-			    "由厉害制作\n\n用 fgit clone [github仓库链接，只能是http或https的] 加速仓库克隆。\n" +
-			    "附加几个参数：\n" +
-			    "r 加速raw.githubusercontent.com的下载速度\n" +
-			    "d 加速github仓库打包代码下载速度\n");
+		console.log(`\n欢迎使用fgit。\n
+由厉害制作\n\n用 fgit clone [github仓库链接，只能是http或https的] 加速仓库克隆。
+附加几个参数：
+r 加速raw.githubusercontent.com的下载速度
+d 加速github仓库打包代码下载速度\n`);
 		process.exit();
 }
 

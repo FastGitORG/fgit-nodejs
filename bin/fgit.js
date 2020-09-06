@@ -1,67 +1,112 @@
 #! /usr/bin/env node
 
-var git = require("./../lib/git"),
-		exec = require('child_process').exec,
-		argv = process.argv,
-		raw = require("./../lib/raw"),
-		dl = require("./../lib/dl"),
-		fs = require("fs"),
-		ping = require("./../lib/ping"),
-		cloneRe = new RegExp("^(https?|git)://(github\\.com|hub\\.fastgit\\.org)/.*/.*", "i"),
-		huan = new RegExp(":github.com/", "i"),
-		githttp = new RegExp("^(https?|git)://.*\..*", "i")
+const git = require("./../lib/git"),
+    exec = require('child_process').exec,
+    argv = process.argv,
+    raw = require("./../lib/raw"),
+    dl = require("./../lib/dl"),
+    fs = require("fs"),
+    ping = require("./../lib/ping"),
+    cloneRe = new RegExp("^(https?|git)://github\\.com/[a-z]*/[a-z]*", "i"),
+    //huan = new RegExp(":github.com/", "i"),
+    githttp = new RegExp("^((https?|git)://.*\\..*|git@.*\\..*:)", "i")
 
-function clone () {
-		var k = "";
-		for (i = 2;i<argv.length;i++){
-				if (githttp.test(argv[i])) {
-						var j = i;
-						continue;
-				}
-				k +=  " " + argv[i] ;
+function clone() {
+    var k = "";
+    for (i = 2;i<argv.length;i++){
+	if (githttp.test(argv[i])) {
+	    var j = i;
+	    continue;
+        }
+    k +=  " " + argv[i] ;
+    }
+    k.replace("clone", "")
+    if (!k) k = "";
+    if (argv[2] === "clone") {
+        // ssh
+	if (/^git@github.com:/i.test(argv[j])) {
+	    console.log("For a number of reasons, we can not accelerate for github ssh :(");
+	    console.log("Start download...")
+	    exec("git clone " + argv[j], function(err, stdout, srderr) {
+		if (err) return console.log("Whoa, there's been a mistake! :(\n\n" + srderr);
+		return console.log("Download complete! :)");
+	    }
+	    )
+	}
+
+	// http/https/git
+	if (cloneRe.test(argv[j])) {
+	    var z = 1;
+	    console.log("Start speeding up the download...");
+	    exec("git clone " + argv[j], function(err, stdout, srderr) {
+		if (err) return console.log("There's been a mistake! :(\n\n" + srderr);
+		return console.log("Download complete! :)");
+	    })
+	}
+	
+	// Other
+	if (argv[j] && !z) {
+	    console.log("Start download...");
+	    exec("git clone " + argv[j], function(err, stdout, srderr) {
+		if (err) return console.log("There's been a mistake! :(\n\n" + srderr);
+		return console.log("Download complete! :)");
+	    })
+	}
+
+	// error
+	if (!j) {
+            return console.log("What you provide is not a link!")
+	}
+	if (/git@hub.fastgit.org:/.test(argv[j])) {
+	    return console.log("We will cancel this acceleration for various reasons!");
+	}
+}
+       /*argv[2] == "clone"?/git@github.com/i.test(argv[j])?
+	(
+	console.log("开始下载..."), 
+	k.replace("clone", ""), 
+	exec("git clone " + argv[j] + k, function (err, stdout, srderr) {
+	    if (err) return console.log("There's been a mistake!\n\n" + srderr)
+		console.log("\n克隆完成\n由于一系列原因，我们无法为您提供github ssh 克隆加速:(\n");
+	})):(console.log("开始下载..."), 
+	    exec("git clone " + argv[j].replace(huan, "://hub.fastgit.org/") + k.replace("clone", ""), function (err, stdout, srderr) {
+		if (err) {
+		    return console.log("\n出错了请重试\n\n" + srderr + "\n");
 		}
-		if (!k) k = "";
-		argv[2] == "clone"?/git@github.com/i.test(argv[j])?
-				(
-						console.log("开始下载..."), 
-						k.replace("clone", ""), 
-						exec("git clone " + argv[j] + k, function (err, stdout, srderr) {
-				if (err) return console.log("出错啦！\n\n" + srderr)
-				console.log("\n克隆完成\n由于一系列原因，我们无法为您提供github ssh 克隆加速:(\n");
-		})):
-				(console.log("开始下载..."), 
-				exec("git clone " + argv[j].replace(huan, "://hub.fastgit.org/") + k.replace("clone", ""), function (err, stdout, srderr) {
-										if (err) {
-												return console.log("\n出错了请重试\n\n" + srderr + "\n");
-										}
-										cloneRe.test(argv[j])?console.log("\n看来加速还是不错滴2333\n"):console.log("\n下载完毕\n")
-				}
-								)
-				):(
-						k.replace("clone", ""), 
-						exec("git clone " + argv[j] + k, function (err, stdout, srderr) {
-						console.log(srderr);
-				}), 
-						console.log("开始下载")
-				)
+		cloneRe.test(argv[j])?console.log("\nIt seems that the speed is still good\n"):console.log("\n下载完毕\n")
+	    })):(
+		k.replace("clone", ""), 
+		exec("git clone " + argv[j] + k, function (err, stdout, srderr) {
+		    console.log(srderr);
+		}), 
+		console.log("开始下载")
+		)*/
 }
 
-if (!argv[2]) {
-		console.log(`\n欢迎使用fgit。\n
-由厉害制作\n\n用 fgit clone [github仓库链接，只能是http或https的] 加速仓库克隆。
-附加几个参数：
-r 加速raw.githubusercontent.com的下载速度
-d 加速github仓库打包代码下载速度\n`);
-		process.exit();
+if (!argv[2] || argv[2] === "fh") {
+	console.log(`
+Welcome to fgit-nodejs!
+Made by lihai2333
+
+help:
+fgit clone <Git warehouse link>
+Additional options:
+r Speed up raw.githubusercontent.com download
+d Speed up github Releases download
+fh List this help
+ping Test whether acceleration is available
+
+`);
+	process.exit();
 }
 
 argv[2] == "clone" ?
-		clone()
+    clone()
 :argv[2] == "r"?
-		argv[3]?raw(argv[3]):console.log("\n请给个raw.githubusercontent.com链接\n")
+    argv[3]?raw(argv[3]):console.log("\nNeed a raw.githubusercontent.com link\n")
 :argv[2] == "d"?
-		argv[3]?dl(argv[3]):console.log("\n请给个github下载链接吧\n")
+    argv[3]?dl(argv[3]):console.log("\nNeed a github Releases link\n")
 :argv[2] == "ping"?
-		ping()
+    ping()
 :git(argv)
 

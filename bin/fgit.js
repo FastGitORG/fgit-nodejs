@@ -45,7 +45,7 @@ function clone() {
 	}
 	
 	// Other
-	if (argv[j] && !z) {
+	if (argv[j] && typeof z === "undefined") {
 	    console.log("Start download...");
 	    exec("git clone " + argv[j], function(err, stdout, srderr) {
 		if (err) return console.log("There's been a mistake! :(\n\n" + srderr);
@@ -61,6 +61,7 @@ function clone() {
 	    return console.log("We will cancel this acceleration for various reasons!");
 	}
 }
+       // Abandoned!
        /*argv[2] == "clone"?/git@github.com/i.test(argv[j])?
 	(
 	console.log("开始下载..."), 
@@ -96,6 +97,8 @@ d Speed up github Releases download
 fh List this help
 ping Test whether acceleration is available
 
+
+Version: 1.1.5
 `);
 	process.exit();
 }

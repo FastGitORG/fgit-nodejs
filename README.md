@@ -8,5 +8,5 @@
 
 Additional options:
 
-`fgit raw` Speed up raw.githubusercontent.com download
-`fgit dl` Speed up github Releases download
+- `fgit raw` Speed up raw.githubusercontent.com download
+- `fgit dl` Speed up github Releases download

@@ -4,9 +4,9 @@
 
 ## 使用方法
 
-```
 `fgit clone <Git warehouse link>`
+
 Additional options:
+
 `fgit raw` Speed up raw.githubusercontent.com download
 `fgit dl` Speed up github Releases download
-```

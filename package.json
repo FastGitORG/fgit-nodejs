@@ -1,26 +1,16 @@
 {
   "name": "fgit-cli",
-  "version": "1.1.5",
-  "main": "./lib/main.js",
+  "version": "1.1.6",
   "bin": {
     "fgit": "bin/fgit.js"
   },
   "description": "加速github仓库克隆的速度",
-  "directories": {
-    "lib": "lib",
-    "test": "test"
-  },
-  "author": "lihai2333@hotmail.com",
+  "author": "lihai2333 <lihaibigbig@gamil.com>",
   "license": "GPL-3.0",
   "keywords": [
     "github",
-    "加速",
-    "clone",
-    "克隆"
+    "clone"
   ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "bugs": {
     "url": "https://github.com/fastgitorg/fgit-nodejs/issues"
   },
@@ -29,6 +19,11 @@
     "url": "git+https://github.com/fastgitorg/fgit-nodejs.git"
   },
   "homepage": "https://github.com/fastgitorg/fgit-nodejs#readme",
-  "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-config-google": "^0.14.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
 }

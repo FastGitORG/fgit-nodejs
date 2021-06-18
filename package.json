@@ -1,6 +1,6 @@
 {
   "name": "fgit-cli",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "bin": {
     "fgit": "bin/fgit.js"
   },

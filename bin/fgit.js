@@ -9,7 +9,9 @@ if (argv[2] == 'clone') {
   let k = '';
 
   for (i = 2; i < argv.length; i++) {
-    k += ' ' + argv[i].replace(/^(http(s)?|git):\/\/github\.com/, 'https://hub.fastgit.org');
+    k += ' ' + argv[i]
+      .replace(/^(http(s)?|git):\/\/github\.com/, 'https://hub.fastgit.org')
+      .replace(/^git@github\.com:/, 'git@hub.fastgit.org:');
   }
 
   console.log('Downloading...');

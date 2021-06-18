@@ -11,7 +11,7 @@ if (argv[2] == 'clone') {
   for (i = 2; i < argv.length; i++) {
     k += ' ' + argv[i]
       .replace(/^(http(s)?|git):\/\/github\.com/, 'https://hub.fastgit.org')
-      .replace(/^git@github\.com:/, 'git@hub.fastgit.org:');
+      .replace(/^git@github\.com:/, 'git@ssh.fastgit.org:');
   }
 
   console.log('Downloading...');
